@@ -1,0 +1,250 @@
+/* ──────────────────────────────────────────
+   ベイズ最適化 可視化 – スタイル
+   ────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0d0d1f;
+  --surface:   #1a1a2e;
+  --border:    #2a3060;
+  --accent1:   #4facfe;
+  --accent2:   #f5576c;
+  --gold:      #FFD700;
+  --text:      #ccd6f6;
+  --muted:     #7a8ab0;
+  --radius:    10px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* ── レイアウト ── */
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── ヘッダー ── */
+header { text-align: center; padding: 4px 0; }
+
+header h1 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* ── コントロールバー ── */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+}
+
+.btn-group { display: flex; gap: 10px; }
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+button:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+
+#btn-reset {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: #fff;
+}
+#btn-reset:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(245, 87, 108, 0.45);
+}
+
+#btn-step {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #0d0d1f;
+}
+#btn-step:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(79, 172, 254, 0.45);
+}
+
+/* ── トグルグループ ── */
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #12122a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+
+.toggle-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.toggle-btn {
+  background: transparent;
+  color: var(--muted);
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.toggle-btn.active {
+  background: var(--border);
+  color: var(--text);
+  border-color: #4a5580;
+}
+
+.toggle-btn:not(.active):hover {
+  color: #a0aec8;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── チャートエリア ── */
+#chart-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+#chart { width: 100%; height: 540px; }
+
+/* ── 情報パネル ── */
+.info-panel {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  flex: 1;
+  min-width: 130px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+}
+
+.info-card.highlight-gold { border-color: rgba(255, 215, 0, 0.35); }
+.info-card.highlight-red  { border-color: rgba(255, 68, 85, 0.35); }
+
+.info-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 5px;
+}
+
+.info-val {
+  font-size: 0.97rem;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  color: #e0eaff;
+}
+
+/* ── 数式パネル ── */
+.formula-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.formula-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 5px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+#formula-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: #a0d8ef;
+  word-break: break-all;
+}
+
+/* ── ローディングオーバーレイ ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 13, 31, 0.78);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 1rem;
+  color: var(--text);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.overlay.hidden { display: none; }
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent1);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── レスポンシブ ── */
+@media (max-width: 640px) {
+  .controls { flex-direction: column; align-items: flex-start; }
+  .toggle-group { flex-wrap: wrap; }
+  #chart { height: 400px; }
+}

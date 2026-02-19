@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ベイズ最適化 可視化</title>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ヘッダー -->
+    <header>
+      <h1>ベイズ最適化 インタラクティブ探索</h1>
+      <p class="subtitle">GS-TS &nbsp;|&nbsp; Gaussian Process + Thompson Sampling</p>
+    </header>
+
+    <!-- コントロールバー -->
+    <div class="controls">
+      <div class="btn-group">
+        <button id="btn-reset" onclick="resetFunction()">🔄 関数をリセット</button>
+        <button id="btn-step"  onclick="stepGP()">🎯 次の候補を探索</button>
+      </div>
+
+      <div class="toggle-group">
+        <span class="toggle-label">表示レイヤー</span>
+        <button class="toggle-btn active" data-mode="true_f"  onclick="setMode('true_f')">真の関数</button>
+        <button class="toggle-btn"        data-mode="gp_mean" onclick="setMode('gp_mean')">GP 平均 μ</button>
+        <button class="toggle-btn"        data-mode="gp_sigma"onclick="setMode('gp_sigma')">不確かさ σ</button>
+      </div>
+    </div>
+
+    <!-- チャート -->
+    <div id="chart-wrap">
+      <div id="chart"></div>
+    </div>
+
+    <!-- 情報パネル -->
+    <div class="info-panel">
+      <div class="info-card">
+        <span class="info-label">ステップ</span>
+        <span class="info-val" id="i-step">—</span>
+      </div>
+      <div class="info-card">
+        <span class="info-label">観測点数</span>
+        <span class="info-val" id="i-obs">—</span>
+      </div>
+      <div class="info-card highlight-gold">
+        <span class="info-label">★ 最大観測値</span>
+        <span class="info-val" id="i-best-f">—</span>
+      </div>
+      <div class="info-card highlight-gold">
+        <span class="info-label">★ 最大点 (x, y)</span>
+        <span class="info-val" id="i-best-pt">—</span>
+      </div>
+      <div class="info-card highlight-red">
+        <span class="info-label">🎯 次の提案点</span>
+        <span class="info-val" id="i-next">—</span>
+      </div>
+    </div>
+
+    <!-- 数式 -->
+    <div class="formula-box">
+      <span class="formula-badge">f(x,y)</span>
+      <span id="formula-text">—</span>
+    </div>
+
+  </div><!-- /.app -->
+
+  <!-- ローディングオーバーレイ -->
+  <div id="overlay" class="overlay hidden">
+    <div class="spinner"></div>
+    <span>計算中...</span>
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>
